@@ -156,11 +156,55 @@ def query_data(query_text, key_list, j_db, max_results=5):
         j_db (dict): The dict to pull the data for matching keys from
 
     """
+    SOURCE_TO_BOOK = {
+        "SHB2"	:	"Schattenhandbuch 2 (German Handbook)",
+        "BB"	:	"Bullets & Bandages",
+        "HS"	:	"Howling Shadows",
+        "HT"	:	"Hard Targets",
+        "DTD"	:	"Data Trails (Dissonant Echoes)",
+        "FA"	:	"Forbidden Arcana",
+        "DT"	:	"Data Trails",
+        "2050"	:	"Shadowrun 2050 (5th Edition)",
+        "BOTL"	:	"Book of the Lost",
+        "SASS"	:	"Sail Away, Sweet Sister",
+        "HKS"	:	"Hong Kong Sourcebook",
+        "TCT"	:	"The Complete Trog",
+        "SPS"	:	"Splintered State",
+        "SAG"	:	"State of the Art ADL (German Handbook)",
+        "RF"	:	"Run Faster",
+        "RG"	:	"Run & Gun",
+        "SR4"	:	"Shadowrun, Fourth Edition",
+        "SR5"	:	"Shadowrun, Fifth Edition",
+        "TVG"	:	"The Vladivostok Gauntlet",
+        "SGG"	:	"Street Grimoire (German-exclusive Content)",
+        "R5"	:	"Rigger 5.0",
+        "CA"	:	"Cutting Aces",
+        "CF"	:	"Chrome Flesh",
+        "AP"	:	"Assassin's Primer",
+        "WAR"	:	"WAR!",
+        "GH3"	:	"Gun Heaven 3",
+        "SS"	:	"Stolen Souls",
+        "SFB"	:	"Shadows In Focus: Butte",
+        "SSP"	:	"Shadow Spells",
+        "LCD"	:	"Lockdown",
+        "SG"	:	"Street Grimoire",
+    }
+
     found = process.extract(query_text, key_list, limit=max_results)
     for i,f in enumerate(found):
+        entry  = j_db[f[0]]
         print('================================================================================')
         print(i+1, ':', f)
-        hprint(j_db[f[0]])
+        if 'page' in entry and 'source' in entry:
+            if  entry['source'] in SOURCE_TO_BOOK:
+                src = SOURCE_TO_BOOK[entry['source']]
+            else:
+                src = entry['source']
+
+            print('NAME', f[0])
+            print('BOOK:', src)
+            print('PAGE:', entry['page'])
+        hprint(entry)
         print('================================================================================')
     print('\n')
 
